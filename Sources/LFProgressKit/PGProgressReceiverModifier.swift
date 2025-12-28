@@ -11,6 +11,8 @@ import SwiftUI
 /// and presenting SwiftUI alerts accordingly.
 internal struct PGProgressReceiverModifier: ViewModifier {
     
+  // let idiom = UIDevice.current.userInterfaceIdiom
+    
     let textColor:Color
     @State private var progressLog: [PGProgressModel]?
     
@@ -32,6 +34,7 @@ internal struct PGProgressReceiverModifier: ViewModifier {
                             .fill(Color.black.gradient)
                             .opacity(0.4)
                             .ignoresSafeArea()
+                            .zIndex(0)
                             
                         VStack {
                             
@@ -68,6 +71,7 @@ internal struct PGProgressReceiverModifier: ViewModifier {
                         .foregroundStyle(textColor)
                         .padding(.horizontal,20)
                         .offset(x: 0, y: 600)
+                        .zIndex(1)
                     }
                     
                 }
