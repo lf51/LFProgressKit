@@ -11,8 +11,6 @@ import SwiftUI
 /// and presenting SwiftUI alerts accordingly.
 internal struct PGProgressReceiverModifier: ViewModifier {
     
-  // let idiom = UIDevice.current.userInterfaceIdiom
-    
     let textColor:Color
     @State private var progressLog: [PGProgressModel]?
     
@@ -40,37 +38,39 @@ internal struct PGProgressReceiverModifier: ViewModifier {
                             
                             ProgressView()
                             
-                            VStack(alignment:.leading) {
+                            ScrollView {
                                 
-                                ForEach(progressLog) { log in
-                                    
-                                    VStack(alignment:.leading) {
+                                VStack {
+                                    ForEach(progressLog) { log in
                                         
-                                        Text("\(log.content.getProgressTitle())")
-                                            .fontWeight(.semibold)
-                                            .font(.subheadline)
-                                            .fontDesign(.monospaced)
-                                            .lineLimit(1)
-                                            .minimumScaleFactor(0.75)
+                                        VStack(alignment:.leading) {
+                                            
+                                            Text("\(log.content.getProgressTitle())")
+                                                .fontWeight(.semibold)
+                                                .font(.subheadline)
+                                                .fontDesign(.monospaced)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.75)
+                                            
+                                            Text("\(log.content.getBodyMessage())")
+                                                .fontWeight(.light)
+                                                .font(.body)
+                                                .fontDesign(.monospaced)
+                                                .multilineTextAlignment(.leading)
+                                            
+                                            Text("...")
+                                                .bold()
+                                        }
+                                       
                                         
-                                        Text("\(log.content.getBodyMessage())")
-                                            .fontWeight(.light)
-                                            .font(.body)
-                                            .fontDesign(.monospaced)
-                                            .multilineTextAlignment(.leading)
-                                        
-                                        Text("...")
-                                            .bold()
                                     }
-                                   
-                                    
                                 }
-                            }
+                            }.scrollIndicators(.never)
                             
                         }
                         .foregroundStyle(textColor)
                         .padding(.horizontal,20)
-                        .offset(x: 0, y: 600)
+                        .offset(x: 0, y: 150)
                         .zIndex(1)
                     }
                     
