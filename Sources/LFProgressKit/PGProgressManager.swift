@@ -33,6 +33,6 @@ public class PGProgressManager {
     }
     
     public func endLog(_ log:PGProgressModel) {
-        
+        subjectExpired.send(log)
     }
 }
