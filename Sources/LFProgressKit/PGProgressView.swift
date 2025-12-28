@@ -60,7 +60,7 @@ internal struct PGProgressView: View {
             }
             .foregroundStyle(textColor)
             .padding(.horizontal,20)
-           // .offset(x: 0, y: -150)
+            .offset(x: 0, y: 150)
             .zIndex(1)
         }
         
