@@ -22,7 +22,7 @@ internal struct PGProgressReceiverModifier: ViewModifier {
     func body(content: Content) -> some View {
         
         content
-            .overlay(alignment: .top, content: {
+            .overlay(alignment: .center, content: {
                 
                 if let progressLog {
                     

@@ -9,6 +9,7 @@ import SwiftUI
 
 internal struct PGProgressView: View {
     
+    @Environment(\.horizontalSizeClass) var hSizeClass
     let textColor: Color
     let progressLog: [PGProgressModel]
     
@@ -36,14 +37,14 @@ internal struct PGProgressView: View {
                                 
                                 Text("\(log.content.getProgressTitle())")
                                     .fontWeight(.semibold)
-                                    .font(.subheadline)
+                                    .font(hSizeClass == .regular ? .title2 : .subheadline)
                                     .fontDesign(.monospaced)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.75)
                                 
                                 Text("\(log.content.getBodyMessage())")
                                     .fontWeight(.light)
-                                    .font(.body)
+                                    .font(hSizeClass == .regular ? .title3 : .callout)
                                     .fontDesign(.monospaced)
                                     .multilineTextAlignment(.leading)
                                 
@@ -59,7 +60,7 @@ internal struct PGProgressView: View {
             }
             .foregroundStyle(textColor)
             .padding(.horizontal,20)
-            .offset(x: 0, y: 150)
+            .offset(x: 0, y: -150)
             .zIndex(1)
         }
         
