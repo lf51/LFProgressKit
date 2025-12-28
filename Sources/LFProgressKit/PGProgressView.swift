@@ -18,7 +18,7 @@ internal struct PGProgressView: View {
             
             Rectangle()
                 .fill(Color.black.gradient)
-                .opacity(0.4)
+                .opacity(0.6)
                 .ignoresSafeArea()
                 .zIndex(0)
                 

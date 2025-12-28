@@ -46,6 +46,11 @@ internal struct PGProgressReceiverModifier: ViewModifier {
                 withAnimation {
                     
                     self.progressLog?.removeAll(where: { $0.id == expiredLog.id })
+                    if let progressLog,
+                        progressLog.isEmpty {
+                        // reset
+                        self.progressLog = nil
+                    }
                 }
 
             }
