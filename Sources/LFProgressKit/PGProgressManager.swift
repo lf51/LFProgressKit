@@ -15,14 +15,24 @@ public class PGProgressManager {
     
     /// Internal subject used to broadcast alert events.
     private let subject = PassthroughSubject<PGProgressModel, Never>()
+    
+    private let subjectExpired = PassthroughSubject<PGProgressModel, Never>()
 
     /// Public read-only publisher for alert events.
-    public var publisher: AnyPublisher<PGProgressModel, Never> {
+    internal var publisher: AnyPublisher<PGProgressModel, Never> {
         subject.eraseToAnyPublisher()
+    }
+    
+    internal var publisherExpired: AnyPublisher<PGProgressModel, Never> {
+        subjectExpired.eraseToAnyPublisher()
     }
 
     /// Posts a new alert event.
-    public func post(_ log: PGProgressModel) {
+    public func startLog(_ log: PGProgressModel) {
         subject.send(log)
+    }
+    
+    public func endLog(_ log:PGProgressModel) {
+        
     }
 }

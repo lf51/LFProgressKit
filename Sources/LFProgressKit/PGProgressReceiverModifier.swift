@@ -26,53 +26,7 @@ internal struct PGProgressReceiverModifier: ViewModifier {
                 
                 if let progressLog {
                     
-                    ZStack {
-                        
-                        Rectangle()
-                            .fill(Color.black.gradient)
-                            .opacity(0.4)
-                            .ignoresSafeArea()
-                            .zIndex(0)
-                            
-                        VStack {
-                            
-                            ProgressView()
-                            
-                            ScrollView {
-                                
-                                VStack {
-                                    ForEach(progressLog) { log in
-                                        
-                                        VStack(alignment:.leading) {
-                                            
-                                            Text("\(log.content.getProgressTitle())")
-                                                .fontWeight(.semibold)
-                                                .font(.subheadline)
-                                                .fontDesign(.monospaced)
-                                                .lineLimit(1)
-                                                .minimumScaleFactor(0.75)
-                                            
-                                            Text("\(log.content.getBodyMessage())")
-                                                .fontWeight(.light)
-                                                .font(.body)
-                                                .fontDesign(.monospaced)
-                                                .multilineTextAlignment(.leading)
-                                            
-                                            Text("...")
-                                                .bold()
-                                        }
-                                       
-                                        
-                                    }
-                                }
-                            }.scrollIndicators(.never)
-                            
-                        }
-                        .foregroundStyle(textColor)
-                        .padding(.horizontal,20)
-                        .offset(x: 0, y: 150)
-                        .zIndex(1)
-                    }
+                    PGProgressView(textColor: textColor, progressLog: progressLog)
                     
                 }
             })
@@ -84,6 +38,14 @@ internal struct PGProgressReceiverModifier: ViewModifier {
                     } else {
                         self.progressLog?.append(progress)
                     }
+                }
+
+            }
+            .onReceive(PGProgressManager.shared.publisherExpired) { expiredLog in
+                
+                withAnimation {
+                    
+                    self.progressLog?.removeAll(where: { $0.id == expiredLog.id })
                 }
 
             }
