@@ -26,45 +26,60 @@ internal struct PGProgressReceiverModifier: ViewModifier {
                 
                 if let progressLog {
                     
-                    VStack {
+                    ZStack {
                         
-                        ProgressView()
-                        
-                        ForEach(progressLog) { log in
+                        Rectangle()
+                            .fill(Color.black.gradient)
+                            .opacity(0.4)
+                            .ignoresSafeArea()
+                            
+                        VStack {
+                            
+                            ProgressView()
                             
                             VStack(alignment:.leading) {
                                 
-                                Text("\(log.content.getProgressTitle())")
-                                    .fontWeight(.semibold)
-                                    .font(.subheadline)
-                                    .fontDesign(.monospaced)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.75)
-                                
-                                Text("\(log.content.getBodyMessage())")
-                                    .fontWeight(.light)
-                                    .font(.body)
-                                    .fontDesign(.monospaced)
-                                    .multilineTextAlignment(.leading)
-                                
-                                Text("...")
-                                    .bold()
+                                ForEach(progressLog) { log in
+                                    
+                                    VStack(alignment:.leading) {
+                                        
+                                        Text("\(log.content.getProgressTitle())")
+                                            .fontWeight(.semibold)
+                                            .font(.subheadline)
+                                            .fontDesign(.monospaced)
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.75)
+                                        
+                                        Text("\(log.content.getBodyMessage())")
+                                            .fontWeight(.light)
+                                            .font(.body)
+                                            .fontDesign(.monospaced)
+                                            .multilineTextAlignment(.leading)
+                                        
+                                        Text("...")
+                                            .bold()
+                                    }
+                                   
+                                    
+                                }
                             }
-                           
                             
                         }
-                        
+                        .foregroundStyle(textColor)
+                        .padding(.horizontal,20)
+                        .offset(x: 0, y: 600)
                     }
-                    .foregroundStyle(textColor)
-                    .offset(x: 0, y: 300)
+                    
                 }
             })
             .onReceive(PGProgressManager.shared.publisher) { progress in
                 
-                if progressLog == nil {
-                    self.progressLog = [progress]
-                } else {
-                    self.progressLog?.append(progress)
+                withAnimation {
+                    if progressLog == nil {
+                        self.progressLog = [progress]
+                    } else {
+                        self.progressLog?.append(progress)
+                    }
                 }
 
             }
