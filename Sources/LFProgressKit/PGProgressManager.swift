@@ -29,22 +29,12 @@ public class PGProgressManager {
 
     /// Usare questo metodo quando si avvia un log manualmente
     /// Usare in combinazione con endLog
-    /// Quando il codice da eseguire può essere racchiuso in un unica closure, usare codeLog
     public func startLog(_ log: PGProgressModel) {
         subject.send(log)
     }
     /// usare questo metodo per terminare un log manualmente
     /// da usare in combinazione con startLog. Richiede lo store del log per poter annullare la stampa
     public func endLog(_ log:PGProgressModel) {
-        subjectExpired.send(log)
-    }
-    
-    /// Questo metodo racchiude il codice dentro un log, gestendo inzio e fine
-    /// Quando si utilizza, non inviare lo stesso log con lo startLog. Duplicazione non necessaria con effetti imprecisati
-    public func codeLog(_ log: PGProgressModel,_ code:() -> Void) {
-        
-        subject.send(log)
-        code()
         subjectExpired.send(log)
     }
 }
